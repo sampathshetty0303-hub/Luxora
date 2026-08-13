@@ -1,5 +1,9 @@
 const nodemailer = require("nodemailer");
 
+if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+    console.error("❌ EMAIL_USER or EMAIL_PASS is missing");
+}
+
 const transporter = nodemailer.createTransport({
     service: "gmail",
 
@@ -9,7 +13,30 @@ const transporter = nodemailer.createTransport({
     }
 });
 
+// Test Gmail connection when server starts
+transporter.verify((error, success) => {
+
+    if (error) {
+
+        console.error(
+            "❌ Gmail SMTP connection failed:"
+        );
+
+        console.error(error);
+
+    } else {
+
+        console.log(
+            "✅ Gmail SMTP connection successful"
+        );
+
+    }
+
+});
+
+
 async function sendOTP(email, otp, purpose) {
+
     let subject = "LUXORA Verification Code";
 
     if (purpose === "login") {
@@ -20,44 +47,80 @@ async function sendOTP(email, otp, purpose) {
         subject = "LUXORA Account Verification";
     }
 
-    const mailOptions = {
-        from: `"LUXORA" <${process.env.EMAIL_USER}>`,
-        to: email,
-        subject,
-        html: `
-            <div style="
-                font-family: Arial;
-                max-width: 600px;
-                margin: auto;
-                padding: 30px;
-                border: 1px solid #ddd;
-            ">
-                <h1 style="letter-spacing: 5px;">
-                    LUXORA
-                </h1>
+    try {
 
-                <p>Your verification code is:</p>
+        const result = await transporter.sendMail({
 
-                <h2 style="
-                    font-size: 32px;
-                    letter-spacing: 8px;
+            from: `"LUXORA" <${process.env.EMAIL_USER}>`,
+
+            to: email,
+
+            subject,
+
+            html: `
+                <div style="
+                    font-family:Arial,sans-serif;
+                    max-width:600px;
+                    margin:auto;
+                    padding:30px;
+                    border:1px solid #ddd;
                 ">
-                    ${otp}
-                </h2>
 
-                <p>
-                    This OTP will expire in 10 minutes.
-                </p>
+                    <h1 style="
+                        letter-spacing:5px;
+                        color:#111;
+                    ">
+                        LUXORA
+                    </h1>
 
-                <p>
-                    If you didn't request this code,
-                    you can safely ignore this email.
-                </p>
-            </div>
-        `
-    };
+                    <p>
+                        Your LUXORA verification code is:
+                    </p>
 
-    return transporter.sendMail(mailOptions);
+                    <h2 style="
+                        font-size:32px;
+                        letter-spacing:8px;
+                    ">
+                        ${otp}
+                    </h2>
+
+                    <p>
+                        This OTP will expire in 10 minutes.
+                    </p>
+
+                    <p>
+                        If you didn't request this code,
+                        you can safely ignore this email.
+                    </p>
+
+                </div>
+            `
+        });
+
+        console.log(
+            `✅ OTP email sent to ${email}`
+        );
+
+        console.log(
+            "Message ID:",
+            result.messageId
+        );
+
+        return result;
+
+    } catch (error) {
+
+        console.error(
+            "❌ OTP EMAIL ERROR:"
+        );
+
+        console.error(error);
+
+        throw new Error(
+            "Unable to send OTP email"
+        );
+
+    }
 }
 
 
@@ -84,11 +147,14 @@ async function sendSellerOrderEmail(order) {
     `).join("");
 
 
-    const mailOptions = {
+    return transporter.sendMail({
+
         from: `"LUXORA Store" <${process.env.EMAIL_USER}>`,
+
         to: process.env.SELLER_EMAIL,
 
-        subject: `NEW LUXORA ORDER - ${order.orderNumber}`,
+        subject:
+            `NEW LUXORA ORDER - ${order.orderNumber}`,
 
         html: `
             <div style="
@@ -144,6 +210,7 @@ async function sendSellerOrderEmail(order) {
 
                     <thead>
                         <tr>
+
                             <th style="text-align:left;padding:10px;">
                                 Product
                             </th>
@@ -159,6 +226,7 @@ async function sendSellerOrderEmail(order) {
                             <th style="text-align:left;padding:10px;">
                                 Total
                             </th>
+
                         </tr>
                     </thead>
 
@@ -186,9 +254,7 @@ async function sendSellerOrderEmail(order) {
 
             </div>
         `
-    };
-
-    return transporter.sendMail(mailOptions);
+    });
 }
 
 
@@ -207,11 +273,14 @@ async function sendCustomerOrderConfirmation(order) {
     `).join("");
 
 
-    const mailOptions = {
+    return transporter.sendMail({
+
         from: `"LUXORA" <${process.env.EMAIL_USER}>`,
+
         to: order.customer.email,
 
-        subject: `LUXORA Order Confirmation - ${order.orderNumber}`,
+        subject:
+            `LUXORA Order Confirmation - ${order.orderNumber}`,
 
         html: `
             <div style="
@@ -223,7 +292,9 @@ async function sendCustomerOrderConfirmation(order) {
 
                 <h1>LUXORA</h1>
 
-                <h2>Thank you for your order!</h2>
+                <h2>
+                    Thank you for your order!
+                </h2>
 
                 <p>
                     Your order has been successfully received.
@@ -254,9 +325,7 @@ async function sendCustomerOrderConfirmation(order) {
 
             </div>
         `
-    };
-
-    return transporter.sendMail(mailOptions);
+    });
 }
 
 
