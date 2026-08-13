@@ -1,442 +1,792 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
 
-```
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-<title>LUXORA - Checkout</title>
+    <title>LUXORA - Checkout</title>
 
-<link
-    rel="stylesheet"
-    href="/css/style.css"
->
+    <link
+        rel="stylesheet"
+        href="/css/style.css"
+    >
 
-<style>
-    .checkout-container {
-        max-width: 700px;
-        margin: 60px auto;
-        padding: 40px;
-        background: #fff;
-        border: 1px solid #e3ddd2;
-    }
+    <style>
 
-    .checkout-container h1 {
-        font-family: Georgia, serif;
-        font-weight: normal;
-        font-size: 42px;
-        margin-bottom: 10px;
-    }
-
-    .checkout-container > p {
-        color: #777;
-        margin-bottom: 35px;
-    }
-
-    .form-group {
-        margin-bottom: 20px;
-    }
-
-    .form-group label {
-        display: block;
-        margin-bottom: 8px;
-        font-size: 13px;
-        font-weight: bold;
-    }
-
-    .form-group input,
-    .form-group textarea {
-        width: 100%;
-        padding: 14px;
-        border: 1px solid #ccc;
-        background: #fafafa;
-        font-size: 15px;
-        outline: none;
-    }
-
-    .form-group input:focus,
-    .form-group textarea:focus {
-        border-color: #d4af37;
-    }
-
-    .form-group textarea {
-        min-height: 100px;
-        resize: vertical;
-    }
-
-    #orderSummary {
-        margin: 30px 0;
-        padding: 20px;
-        background: #faf8f3;
-        border: 1px solid #e3ddd2;
-    }
-
-    .summary-title {
-        font-family: Georgia, serif;
-        font-size: 22px;
-        margin-bottom: 15px;
-    }
-
-    .summary-item {
-        display: flex;
-        justify-content: space-between;
-        padding: 10px 0;
-        border-bottom: 1px solid #ddd;
-    }
-
-    .summary-total {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 15px;
-        font-weight: bold;
-        font-size: 18px;
-    }
-
-    .checkout-button {
-        width: 100%;
-        padding: 17px;
-        background: #d4af37;
-        border: none;
-        color: #111;
-        font-weight: bold;
-        cursor: pointer;
-        font-size: 14px;
-    }
-
-    .checkout-button:hover {
-        background: #b9972e;
-    }
-
-    .checkout-button:disabled {
-        opacity: .6;
-        cursor: not-allowed;
-    }
-
-    #checkoutMessage {
-        margin-top: 20px;
-        text-align: center;
-        padding: 15px;
-        display: none;
-    }
-
-    #checkoutMessage.success {
-        display: block;
-        color: #246b35;
-        background: #edf8ef;
-        border: 1px solid #9bd0a6;
-    }
-
-    #checkoutMessage.error {
-        display: block;
-        color: #9b2525;
-        background: #fff0f0;
-        border: 1px solid #e0a0a0;
-    }
-
-    .success-screen {
-        display: none;
-        text-align: center;
-        padding: 30px 10px;
-    }
-
-    .success-icon {
-        width: 80px;
-        height: 80px;
-        margin: 0 auto 25px;
-        border: 2px solid #d4af37;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #d4af37;
-        font-size: 38px;
-    }
-
-    .success-screen h2 {
-        font-family: Georgia, serif;
-        font-size: 38px;
-        font-weight: normal;
-        margin-bottom: 15px;
-    }
-
-    .success-screen p {
-        color: #777;
-        line-height: 1.7;
-    }
-
-    .order-number {
-        margin: 20px 0;
-        font-weight: bold;
-    }
-
-    .continue-shopping {
-        display: inline-block;
-        margin-top: 25px;
-        padding: 15px 25px;
-        background: #d4af37;
-        color: #111;
-        text-decoration: none;
-        font-weight: bold;
-    }
-
-    @media(max-width:600px) {
         .checkout-container {
-            margin: 20px;
-            padding: 25px;
+            max-width: 700px;
+            margin: 60px auto;
+            padding: 40px;
+            background: #fff;
+            border: 1px solid #e3ddd2;
         }
 
         .checkout-container h1 {
-            font-size: 32px;
+            font-family: Georgia, serif;
+            font-weight: normal;
+            font-size: 42px;
+            margin-bottom: 10px;
         }
-    }
-</style>
-```
+
+        .checkout-container > p {
+            color: #777;
+            margin-bottom: 35px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #ccc;
+            background: #fafafa;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: #d4af37;
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        #orderSummary {
+            margin: 30px 0;
+            padding: 20px;
+            background: #faf8f3;
+            border: 1px solid #e3ddd2;
+        }
+
+        .summary-title {
+            font-family: Georgia, serif;
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .summary-item:last-of-type {
+            border-bottom: none;
+        }
+
+        .summary-shipping {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            color: #666;
+        }
+
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px solid #222;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .checkout-button {
+            width: 100%;
+            padding: 17px;
+            background: #d4af37;
+            border: none;
+            color: #111;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .checkout-button:hover {
+            background: #b9972e;
+        }
+
+        .checkout-button:disabled {
+            opacity: .6;
+            cursor: not-allowed;
+        }
+
+        #checkoutMessage {
+            margin-top: 20px;
+            text-align: center;
+            padding: 15px;
+            display: none;
+        }
+
+        #checkoutMessage.success {
+            display: block;
+            color: #246b35;
+            background: #edf8ef;
+            border: 1px solid #9bd0a6;
+        }
+
+        #checkoutMessage.error {
+            display: block;
+            color: #9b2525;
+            background: #fff0f0;
+            border: 1px solid #e0a0a0;
+        }
+
+        .success-screen {
+            display: none;
+            text-align: center;
+            padding: 30px 10px;
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 25px;
+            border: 2px solid #d4af37;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #d4af37;
+            font-size: 38px;
+        }
+
+        .success-screen h2 {
+            font-family: Georgia, serif;
+            font-size: 38px;
+            font-weight: normal;
+            margin-bottom: 15px;
+        }
+
+        .success-screen p {
+            color: #777;
+            line-height: 1.7;
+        }
+
+        .order-number {
+            margin: 20px 0;
+            font-weight: bold;
+        }
+
+        .order-total {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .continue-shopping {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 15px 25px;
+            background: #d4af37;
+            color: #111;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .loading {
+            text-align: center;
+            color: #777;
+            padding: 10px;
+        }
+
+        .empty-cart {
+            text-align: center;
+            color: #777;
+            padding: 15px;
+        }
+
+        @media(max-width: 600px) {
+
+            .checkout-container {
+                margin: 20px;
+                padding: 25px;
+            }
+
+            .checkout-container h1 {
+                font-size: 32px;
+            }
+
+            .summary-item {
+                font-size: 14px;
+            }
+
+        }
+
+    </style>
 
 </head>
 
+
 <body>
+
 
 <header>
 
-```
-<a href="/" class="logo">
-    LUXORA
-</a>
-```
+    <a href="/" class="logo">
+        LUXORA
+    </a>
 
 </header>
 
+
 <main class="checkout-container">
 
-```
-<div id="checkoutContent">
 
-    <h1>Complete Your Order</h1>
+    <!-- CHECKOUT CONTENT -->
 
-    <p>
-        Enter your delivery details below.
-    </p>
+    <div id="checkoutContent">
+
+        <h1>
+            Complete Your Order
+        </h1>
+
+        <p>
+            Enter your delivery details below.
+        </p>
 
 
-    <form id="checkoutForm">
+        <form id="checkoutForm">
 
-        <div class="form-group">
 
-            <label>
-                Full Name
-            </label>
+            <!-- NAME -->
 
-            <input
-                type="text"
-                id="name"
-                required
+            <div class="form-group">
+
+                <label for="name">
+                    Full Name
+                </label>
+
+                <input
+                    type="text"
+                    id="name"
+                    placeholder="Enter your full name"
+                    required
+                >
+
+            </div>
+
+
+            <!-- PHONE -->
+
+            <div class="form-group">
+
+                <label for="phone">
+                    Phone Number
+                </label>
+
+                <input
+                    type="tel"
+                    id="phone"
+                    placeholder="Enter your phone number"
+                    required
+                >
+
+            </div>
+
+
+            <!-- EMAIL -->
+
+            <div class="form-group">
+
+                <label for="email">
+                    Email
+                    <small>(optional)</small>
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="Enter your email"
+                >
+
+            </div>
+
+
+            <!-- ADDRESS -->
+
+            <div class="form-group">
+
+                <label for="address">
+                    Address
+                </label>
+
+                <textarea
+                    id="address"
+                    placeholder="House number, street, area"
+                    required
+                ></textarea>
+
+            </div>
+
+
+            <!-- CITY -->
+
+            <div class="form-group">
+
+                <label for="city">
+                    City
+                </label>
+
+                <input
+                    type="text"
+                    id="city"
+                    placeholder="Enter your city"
+                    required
+                >
+
+            </div>
+
+
+            <!-- STATE -->
+
+            <div class="form-group">
+
+                <label for="state">
+                    State
+                </label>
+
+                <input
+                    type="text"
+                    id="state"
+                    placeholder="Enter your state"
+                    required
+                >
+
+            </div>
+
+
+            <!-- PIN -->
+
+            <div class="form-group">
+
+                <label for="pinCode">
+                    PIN Code
+                </label>
+
+                <input
+                    type="text"
+                    id="pinCode"
+                    maxlength="6"
+                    pattern="[0-9]{6}"
+                    placeholder="6-digit PIN code"
+                    required
+                >
+
+            </div>
+
+
+            <!-- ORDER SUMMARY -->
+
+            <div id="orderSummary">
+
+                <div class="loading">
+                    Loading your order...
+                </div>
+
+            </div>
+
+
+            <!-- PLACE ORDER -->
+
+            <button
+                type="submit"
+                class="checkout-button"
+                id="placeOrderButton"
+                disabled
             >
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label>
-                Phone Number
-            </label>
-
-            <input
-                type="tel"
-                id="phone"
-                required
-            >
-
-        </div>
+                PLACE ORDER
+            </button>
 
 
-        <div class="form-group">
+            <!-- MESSAGE -->
 
-            <label>
-                Email
-                <small>(optional)</small>
-            </label>
-
-            <input
-                type="email"
-                id="email"
-            >
-
-        </div>
+            <p id="checkoutMessage"></p>
 
 
-        <div class="form-group">
+        </form>
 
-            <label>
-                Address
-            </label>
-
-            <textarea
-                id="address"
-                required
-            ></textarea>
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label>
-                City
-            </label>
-
-            <input
-                type="text"
-                id="city"
-                required
-            >
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label>
-                State
-            </label>
-
-            <input
-                type="text"
-                id="state"
-                required
-            >
-
-        </div>
-
-
-        <div class="form-group">
-
-            <label>
-                PIN Code
-            </label>
-
-            <input
-                type="text"
-                id="pinCode"
-                maxlength="6"
-                pattern="[0-9]{6}"
-                required
-            >
-
-        </div>
-
-
-        <div id="orderSummary"></div>
-
-
-        <button
-            type="submit"
-            class="checkout-button"
-            id="placeOrderButton"
-        >
-            PLACE ORDER
-        </button>
-
-
-        <p id="checkoutMessage"></p>
-
-    </form>
-
-</div>
-
-
-<!-- SUCCESS SCREEN -->
-
-<div
-    class="success-screen"
-    id="successScreen"
->
-
-    <div class="success-icon">
-        ✓
     </div>
 
-    <h2>
-        Order Placed Successfully
-    </h2>
 
-    <p>
-        Thank you for shopping with LUXORA.
-    </p>
-
-    <p>
-        Your order has been received successfully.
-        We will contact you regarding your order.
-    </p>
+    <!-- SUCCESS SCREEN -->
 
     <div
-        class="order-number"
-        id="orderNumber"
-    ></div>
-
-    <a
-        href="/"
-        class="continue-shopping"
+        class="success-screen"
+        id="successScreen"
     >
-        CONTINUE SHOPPING
-    </a>
 
-</div>
-```
+        <div class="success-icon">
+            ✓
+        </div>
+
+        <h2>
+            Order Placed Successfully
+        </h2>
+
+        <p>
+            Thank you for shopping with LUXORA.
+        </p>
+
+        <p>
+            Your order has been received successfully.
+            We will contact you regarding your order.
+        </p>
+
+        <div
+            class="order-number"
+            id="orderNumber"
+        ></div>
+
+        <div
+            class="order-total"
+            id="successTotal"
+        ></div>
+
+        <a
+            href="/"
+            class="continue-shopping"
+        >
+            CONTINUE SHOPPING
+        </a>
+
+    </div>
+
 
 </main>
 
+
 <script>
 
-const cart =
-    JSON.parse(
-        localStorage.getItem("luxoraCart")
-    ) || [];
 
+/*
+==================================================
+GET CART
+==================================================
+*/
 
-const products = [
+let cart = [];
 
-    {
-        id: 1,
-        name: "LUXORA Noir",
-        price: 2499
-    },
+try {
 
-    {
-        id: 2,
-        name: "LUXORA Élan",
-        price: 2299
-    },
+    cart =
+        JSON.parse(
+            localStorage.getItem("luxoraCart")
+        ) || [];
 
-    {
-        id: 3,
-        name: "LUXORA Oud",
-        price: 2799
-    },
+} catch (error) {
 
-    {
-        id: 4,
-        name: "LUXORA Éclat",
-        price: 2199
-    }
+    console.error(
+        "Could not read cart:",
+        error
+    );
 
-];
-
-
-function money(value) {
-
-    return "₹" +
-        Number(value)
-        .toLocaleString("en-IN");
+    cart = [];
 
 }
 
+
+/*
+==================================================
+STORE PRODUCTS
+==================================================
+*/
+
+let products = [];
+
+
+/*
+==================================================
+FORMAT MONEY
+==================================================
+*/
+
+function money(value) {
+
+    return (
+        "₹" +
+        Number(value || 0)
+            .toLocaleString("en-IN")
+    );
+
+}
+
+
+/*
+==================================================
+GET PRODUCT ID FROM CART ITEM
+==================================================
+
+Supports both:
+
+{
+    id: "..."
+}
+
+and:
+
+{
+    productId: "..."
+}
+*/
+
+function getProductId(item) {
+
+    return (
+        item.productId ||
+        item.id ||
+        item._id
+    );
+
+}
+
+
+/*
+==================================================
+GET QUANTITY
+==================================================
+*/
+
+function getQuantity(item) {
+
+    const quantity =
+        Number(item.quantity);
+
+    if (
+        !Number.isFinite(quantity) ||
+        quantity <= 0
+    ) {
+
+        return 1;
+
+    }
+
+    return Math.floor(quantity);
+
+}
+
+
+/*
+==================================================
+LOAD PRODUCTS FROM API
+==================================================
+*/
+
+async function loadProducts() {
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/products"
+            );
+
+
+        /*
+        Get text first.
+
+        This prevents:
+
+        Unexpected end of JSON input
+
+        if the server sends an empty response.
+        */
+
+        const text =
+            await response.text();
+
+
+        if (!text) {
+
+            throw new Error(
+                "Products API returned an empty response."
+            );
+
+        }
+
+
+        let data;
+
+        try {
+
+            data =
+                JSON.parse(text);
+
+        } catch (error) {
+
+            console.error(
+                "Products API response:",
+                text
+            );
+
+            throw new Error(
+                "Products API returned invalid JSON."
+            );
+
+        }
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message ||
+                "Could not load products."
+            );
+
+        }
+
+
+        /*
+        Support different API formats.
+        */
+
+        if (Array.isArray(data)) {
+
+            products = data;
+
+        } else if (
+            Array.isArray(data.products)
+        ) {
+
+            products = data.products;
+
+        } else if (
+            Array.isArray(data.data)
+        ) {
+
+            products = data.data;
+
+        } else {
+
+            products = [];
+
+        }
+
+
+        console.log(
+            "Products loaded:",
+            products
+        );
+
+
+        displayOrderSummary();
+
+
+    } catch (error) {
+
+        console.error(
+            "PRODUCT LOAD ERROR:",
+            error
+        );
+
+
+        document
+            .getElementById(
+                "orderSummary"
+            )
+            .innerHTML = `
+
+                <div class="empty-cart">
+
+                    Could not load your products.
+
+                    <br><br>
+
+                    Please refresh the page.
+
+                </div>
+
+            `;
+
+
+        document
+            .getElementById(
+                "placeOrderButton"
+            )
+            .disabled = true;
+
+    }
+
+}
+
+
+/*
+==================================================
+FIND PRODUCT
+==================================================
+*/
+
+function findProduct(
+    cartItem
+) {
+
+    const productId =
+        getProductId(cartItem);
+
+
+    if (!productId) {
+
+        return null;
+
+    }
+
+
+    return products.find(
+        product => {
+
+            const mongoId =
+                String(
+                    product._id || ""
+                );
+
+            const normalId =
+                String(
+                    product.id || ""
+                );
+
+            const cartId =
+                String(
+                    productId
+                );
+
+
+            return (
+                mongoId === cartId ||
+                normalId === cartId
+            );
+
+        }
+    );
+
+}
+
+
+/*
+==================================================
+DISPLAY ORDER SUMMARY
+==================================================
+*/
 
 function displayOrderSummary() {
 
@@ -446,79 +796,306 @@ function displayOrderSummary() {
         );
 
 
-    if (cart.length === 0) {
+    const button =
+        document.getElementById(
+            "placeOrderButton"
+        );
+
+
+    if (!cart.length) {
 
         summary.innerHTML = `
+
             <div class="summary-title">
                 Your Bag
             </div>
 
-            <p>Your bag is empty.</p>
+            <div class="empty-cart">
+
+                Your bag is empty.
+
+                <br><br>
+
+                <a href="/">
+                    Continue Shopping
+                </a>
+
+            </div>
+
         `;
 
+
+        button.disabled = true;
+
         return;
+
     }
 
 
-    let total = 0;
+    if (!products.length) {
+
+        summary.innerHTML = `
+
+            <div class="loading">
+                Loading product prices...
+            </div>
+
+        `;
+
+
+        button.disabled = true;
+
+        return;
+
+    }
+
+
+    let subtotal = 0;
 
     let html = `
+
         <div class="summary-title">
             Your Order
         </div>
+
     `;
 
 
-    cart.forEach(item => {
-
-        const product =
-            products.find(
-                p => p.id === item.id
-            );
+    let validItems = 0;
 
 
-        if (!product) return;
+    cart.forEach(
+        item => {
+
+            const product =
+                findProduct(item);
 
 
-        const itemTotal =
-            product.price *
-            item.quantity;
+            if (!product) {
+
+                console.warn(
+                    "Product not found:",
+                    item
+                );
+
+                return;
+
+            }
 
 
-        total += itemTotal;
+            const quantity =
+                getQuantity(item);
 
 
-        html += `
-            <div class="summary-item">
-                <span>
-                    ${product.name}
-                    × ${item.quantity}
-                </span>
+            const price =
+                Number(
+                    product.price
+                ) || 0;
 
-                <span>
-                    ${money(itemTotal)}
-                </span>
+
+            const itemTotal =
+                price * quantity;
+
+
+            subtotal += itemTotal;
+
+            validItems++;
+
+
+            html += `
+
+                <div class="summary-item">
+
+                    <span>
+                        ${escapeHTML(
+                            product.name ||
+                            "Product"
+                        )}
+                        × ${quantity}
+                    </span>
+
+                    <span>
+                        ${money(itemTotal)}
+                    </span>
+
+                </div>
+
+            `;
+
+        }
+    );
+
+
+    /*
+    No valid products
+    */
+
+    if (validItems === 0) {
+
+        summary.innerHTML = `
+
+            <div class="summary-title">
+                Your Order
             </div>
+
+            <div class="empty-cart">
+
+                Your cart contains products
+                that are no longer available.
+
+                <br><br>
+
+                Please return to the shop
+                and add the products again.
+
+            </div>
+
         `;
 
-    });
+
+        button.disabled = true;
+
+        return;
+
+    }
+
+
+    /*
+    SHIPPING
+    */
+
+    const shipping =
+        subtotal >= 999
+            ? 0
+            : 50;
+
+
+    /*
+    FINAL TOTAL
+    */
+
+    const total =
+        subtotal + shipping;
 
 
     html += `
-        <div class="summary-total">
-            <span>Total</span>
-            <span>${money(total)}</span>
+
+        <div class="summary-shipping">
+
+            <span>
+                Subtotal
+            </span>
+
+            <span>
+                ${money(subtotal)}
+            </span>
+
         </div>
+
+
+        <div class="summary-shipping">
+
+            <span>
+                Shipping
+            </span>
+
+            <span>
+
+                ${
+                    shipping === 0
+                    ? "FREE"
+                    : money(shipping)
+                }
+
+            </span>
+
+        </div>
+
+
+        <div class="summary-total">
+
+            <span>
+                Total
+            </span>
+
+            <span>
+                ${money(total)}
+            </span>
+
+        </div>
+
     `;
 
 
     summary.innerHTML = html;
 
+
+    /*
+    Enable button
+    */
+
+    button.disabled = false;
+
+
+    /*
+    Store calculated total
+    */
+
+    window.checkoutSubtotal =
+        subtotal;
+
+    window.checkoutShipping =
+        shipping;
+
+    window.checkoutTotal =
+        total;
+
+
+    console.log(
+        "CHECKOUT TOTAL:",
+        {
+            subtotal,
+            shipping,
+            total
+        }
+    );
+
 }
 
 
+/*
+==================================================
+ESCAPE HTML
+==================================================
+*/
+
+function escapeHTML(
+    value
+) {
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+    div.textContent =
+        value;
+
+    return div.innerHTML;
+
+}
+
+
+/*
+==================================================
+SUBMIT ORDER
+==================================================
+*/
+
 document
-    .getElementById("checkoutForm")
+    .getElementById(
+        "checkoutForm"
+    )
     .addEventListener(
         "submit",
         async function(event) {
@@ -526,7 +1103,11 @@ document
             event.preventDefault();
 
 
-            if (cart.length === 0) {
+            /*
+            Check cart
+            */
+
+            if (!cart.length) {
 
                 showMessage(
                     "Your bag is empty.",
@@ -537,6 +1118,99 @@ document
 
             }
 
+
+            /*
+            Check products
+            */
+
+            if (!products.length) {
+
+                showMessage(
+                    "Products are still loading. Please try again.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            /*
+            Prepare order items
+            */
+
+            const orderItems = [];
+
+
+            for (
+                const item of cart
+            ) {
+
+                const product =
+                    findProduct(item);
+
+
+                if (!product) {
+
+                    showMessage(
+                        "One of the products in your cart is no longer available.",
+                        "error"
+                    );
+
+                    return;
+
+                }
+
+
+                const productId =
+                    product._id ||
+                    product.id;
+
+
+                const quantity =
+                    getQuantity(item);
+
+
+                if (!productId) {
+
+                    showMessage(
+                        "Invalid product in cart.",
+                        "error"
+                    );
+
+                    return;
+
+                }
+
+
+                orderItems.push({
+
+                    productId:
+                        productId,
+
+                    quantity:
+                        quantity
+
+                });
+
+            }
+
+
+            if (!orderItems.length) {
+
+                showMessage(
+                    "Your bag is empty.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            /*
+            Button
+            */
 
             const button =
                 document.getElementById(
@@ -550,53 +1224,78 @@ document
                 "PLACING ORDER...";
 
 
+            /*
+            Customer details
+            */
+
             const orderData = {
 
                 name:
                     document
-                    .getElementById("name")
+                    .getElementById(
+                        "name"
+                    )
                     .value
                     .trim(),
 
                 phone:
                     document
-                    .getElementById("phone")
+                    .getElementById(
+                        "phone"
+                    )
                     .value
                     .trim(),
 
                 email:
                     document
-                    .getElementById("email")
+                    .getElementById(
+                        "email"
+                    )
                     .value
                     .trim(),
 
                 address:
                     document
-                    .getElementById("address")
+                    .getElementById(
+                        "address"
+                    )
                     .value
                     .trim(),
 
                 city:
                     document
-                    .getElementById("city")
+                    .getElementById(
+                        "city"
+                    )
                     .value
                     .trim(),
 
                 state:
                     document
-                    .getElementById("state")
+                    .getElementById(
+                        "state"
+                    )
                     .value
                     .trim(),
 
                 pinCode:
                     document
-                    .getElementById("pinCode")
+                    .getElementById(
+                        "pinCode"
+                    )
                     .value
                     .trim(),
 
-                items: cart
+                items:
+                    orderItems
 
             };
+
+
+            console.log(
+                "ORDER DATA:",
+                orderData
+            );
 
 
             try {
@@ -606,14 +1305,18 @@ document
                         "/api/orders",
                         {
 
-                            method: "POST",
+                            method:
+                                "POST",
 
                             headers: {
+
                                 "Content-Type":
                                     "application/json"
+
                             },
 
-                            credentials: "include",
+                            credentials:
+                                "include",
 
                             body:
                                 JSON.stringify(
@@ -624,23 +1327,72 @@ document
                     );
 
 
-                const data =
-                    await response.json();
+                /*
+                Read text first.
+
+                This prevents:
+
+                Unexpected end of JSON input
+                */
+
+                const text =
+                    await response.text();
 
 
-                if (!response.ok) {
+                console.log(
+                    "ORDER API RESPONSE:",
+                    text
+                );
+
+
+                if (!text) {
 
                     throw new Error(
-                        data.message ||
-                        "Could not place order"
+                        "Server returned an empty response."
+                    );
+
+                }
+
+
+                let data;
+
+
+                try {
+
+                    data =
+                        JSON.parse(text);
+
+                } catch (jsonError) {
+
+                    console.error(
+                        "Invalid JSON from server:",
+                        text
+                    );
+
+                    throw new Error(
+                        "Server returned an invalid response."
                     );
 
                 }
 
 
                 /*
-                 * ORDER SUCCESS
-                 */
+                Backend error
+                */
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        data.message ||
+                        "Could not place order."
+                    );
+
+                }
+
+
+                /*
+                SUCCESS
+                */
 
                 document
                     .getElementById(
@@ -658,30 +1410,57 @@ document
                     "block";
 
 
+                /*
+                Order number
+                */
+
                 document
                     .getElementById(
                         "orderNumber"
                     )
                     .innerText =
                     data.orderNumber
-                    ? "Order ID: " +
-                      data.orderNumber
-                    : "Your order has been confirmed.";
+                        ? "Order ID: " +
+                          data.orderNumber
+                        : "Your order has been confirmed.";
 
 
                 /*
-                 * Clear cart only
-                 * after backend confirms order
-                 */
+                Show total returned
+                by backend.
+                */
+
+                if (
+                    data.total !== undefined
+                ) {
+
+                    document
+                        .getElementById(
+                            "successTotal"
+                        )
+                        .innerText =
+                        "Order Total: " +
+                        money(data.total);
+
+                }
+
+
+                /*
+                Clear cart ONLY after
+                successful order.
+                */
 
                 localStorage.removeItem(
                     "luxoraCart"
                 );
 
 
-            } catch(error) {
+            } catch (error) {
 
-                console.error(error);
+                console.error(
+                    "ORDER ERROR:",
+                    error
+                );
 
 
                 showMessage(
@@ -703,6 +1482,12 @@ document
     );
 
 
+/*
+==================================================
+SHOW MESSAGE
+==================================================
+*/
+
 function showMessage(
     text,
     type
@@ -717,15 +1502,27 @@ function showMessage(
     message.innerText =
         text;
 
+
     message.className =
         type;
+
+
+    message.style.display =
+        "block";
 
 }
 
 
-displayOrderSummary();
+/*
+==================================================
+START
+==================================================
+*/
+
+loadProducts();
 
 </script>
+
 
 </body>
 
