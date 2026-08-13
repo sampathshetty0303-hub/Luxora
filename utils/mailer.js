@@ -1,55 +1,111 @@
-const nodemailer = require("nodemailer");
+const { Resend } = require("resend");
 
 
 // ======================================================
-// GMAIL SMTP
+// RESEND
 // ======================================================
 
-const transporter = nodemailer.createTransport({
-
-    host: "smtp.gmail.com",
-
-    port: 465,
-
-    secure: true,
-
-    auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-    },
-
-    connectionTimeout: 30000,
-
-    greetingTimeout: 30000,
-
-    socketTimeout: 60000
-
-});
+const resend = new Resend(
+    process.env.RESEND_API_KEY
+);
 
 
 // ======================================================
-// TEST GMAIL CONNECTION
+// EMAIL CONFIGURATION
 // ======================================================
 
-transporter.verify()
+// IMPORTANT:
+// This must be a sender address that Resend allows you
+// to send from.
+//
+// For initial testing you can use:
+// onboarding@resend.dev
+//
+// Once you verify your own domain in Resend, change this
+// to something like:
+// LUXORA <noreply@yourdomain.com>
 
-    .then(() => {
+const FROM_EMAIL =
+    process.env.EMAIL_FROM ||
+    "LUXORA <onboarding@resend.dev>";
+
+
+// ======================================================
+// SEND EMAIL HELPER
+// ======================================================
+
+async function sendEmail({
+    to,
+    subject,
+    html
+}) {
+
+    try {
+
+        if (!process.env.RESEND_API_KEY) {
+
+            throw new Error(
+                "RESEND_API_KEY is not configured"
+            );
+
+        }
+
+
+        const { data, error } =
+            await resend.emails.send({
+
+                from: FROM_EMAIL,
+
+                to: [to],
+
+                subject,
+
+                html
+
+            });
+
+
+        if (error) {
+
+            console.error(
+                "❌ Resend email error:"
+            );
+
+            console.error(error);
+
+            throw new Error(
+                error.message ||
+                "Unable to send email"
+            );
+
+        }
+
 
         console.log(
-            "✅ Gmail SMTP connection successful"
+            "✅ Email sent successfully:",
+            data
         );
 
-    })
 
-    .catch((error) => {
+        return data;
+
+
+    } catch (error) {
 
         console.error(
-            "❌ Gmail SMTP connection failed:"
+            "❌ EMAIL SEND ERROR:"
         );
 
         console.error(error);
 
-    });
+        throw new Error(
+            error.message ||
+            "Unable to send email"
+        );
+
+    }
+
+}
 
 
 // ======================================================
@@ -66,10 +122,17 @@ async function sendOTP(
         "LUXORA Verification Code";
 
 
+    let heading =
+        "Verify Your LUXORA Account";
+
+
     if (purpose === "login") {
 
         subject =
             "LUXORA Login OTP";
+
+        heading =
+            "Login to LUXORA";
 
     }
 
@@ -79,139 +142,168 @@ async function sendOTP(
         subject =
             "LUXORA Account Verification";
 
+        heading =
+            "Verify Your LUXORA Account";
+
     }
 
 
-    const mailOptions = {
+    const html = `
 
-        from:
-            `"LUXORA" <${process.env.EMAIL_USER}>`,
+        <!DOCTYPE html>
 
-        to:
-            email,
+        <html>
 
-        subject:
+        <head>
 
-            subject,
+            <meta charset="UTF-8">
 
-        html: `
+            <title>
+                ${subject}
+            </title>
+
+        </head>
+
+
+        <body style="
+            margin:0;
+            padding:0;
+            background:#f5f5f5;
+            font-family:Arial,Helvetica,sans-serif;
+        ">
+
 
             <div style="
-                font-family:Arial,sans-serif;
                 max-width:600px;
-                margin:auto;
-                padding:30px;
-                border:1px solid #ddd;
+                margin:40px auto;
                 background:#ffffff;
+                border:1px solid #dddddd;
             ">
 
-                <h1 style="
-                    letter-spacing:5px;
-                    color:#111;
-                ">
-                    LUXORA
-                </h1>
 
-
-                <p style="
-                    color:#555;
-                    font-size:16px;
-                ">
-                    Your verification code is:
-                </p>
-
+                <!-- HEADER -->
 
                 <div style="
+                    padding:30px;
                     text-align:center;
-                    margin:30px 0;
+                    background:#0b0b0b;
                 ">
 
-                    <span style="
-                        display:inline-block;
-                        font-size:32px;
-                        font-weight:bold;
-                        letter-spacing:8px;
+                    <h1 style="
+                        margin:0;
                         color:#d4af37;
-                        padding:15px 25px;
-                        border:1px solid #d4af37;
+                        font-family:Georgia,serif;
+                        font-size:32px;
+                        letter-spacing:7px;
                     ">
-                        ${otp}
-                    </span>
+                        LUXORA
+                    </h1>
 
                 </div>
 
 
-                <p style="
-                    color:#555;
-                    font-size:14px;
-                ">
-                    This OTP will expire in
-                    <strong>10 minutes</strong>.
-                </p>
+                <!-- CONTENT -->
 
-
-                <p style="
-                    color:#777;
-                    font-size:13px;
-                ">
-                    If you didn't request this code,
-                    you can safely ignore this email.
-                </p>
-
-
-                <hr style="
-                    border:0;
-                    border-top:1px solid #eee;
-                    margin:30px 0;
-                ">
-
-
-                <p style="
-                    color:#999;
-                    font-size:12px;
+                <div style="
+                    padding:35px;
                     text-align:center;
                 ">
-                    © LUXORA
-                </p>
+
+                    <h2 style="
+                        margin-top:0;
+                        color:#222222;
+                        font-weight:normal;
+                    ">
+                        ${heading}
+                    </h2>
+
+
+                    <p style="
+                        color:#666666;
+                        font-size:15px;
+                        line-height:1.6;
+                    ">
+                        Your verification code is:
+                    </p>
+
+
+                    <div style="
+                        margin:30px 0;
+                    ">
+
+                        <span style="
+                            display:inline-block;
+                            padding:18px 30px;
+                            border:1px solid #d4af37;
+                            color:#111111;
+                            font-size:32px;
+                            font-weight:bold;
+                            letter-spacing:8px;
+                        ">
+                            ${otp}
+                        </span>
+
+                    </div>
+
+
+                    <p style="
+                        color:#555555;
+                        font-size:14px;
+                    ">
+                        This OTP will expire in
+                        <strong>10 minutes</strong>.
+                    </p>
+
+
+                    <p style="
+                        color:#888888;
+                        font-size:13px;
+                        line-height:1.6;
+                    ">
+                        If you didn't request this code,
+                        you can safely ignore this email.
+                    </p>
+
+                </div>
+
+
+                <!-- FOOTER -->
+
+                <div style="
+                    padding:20px;
+                    text-align:center;
+                    border-top:1px solid #eeeeee;
+                ">
+
+                    <p style="
+                        margin:0;
+                        color:#999999;
+                        font-size:12px;
+                    ">
+                        © LUXORA
+                    </p>
+
+                </div>
+
 
             </div>
 
-        `
+        </body>
 
-    };
+        </html>
 
-
-    try {
-
-        const info =
-            await transporter.sendMail(
-                mailOptions
-            );
+    `;
 
 
-        console.log(
-            "✅ OTP email sent successfully:",
-            info.messageId
-        );
+    return sendEmail({
 
+        to: email,
 
-        return info;
+        subject,
 
+        html
 
-    } catch (error) {
-
-        console.error(
-            "❌ OTP EMAIL ERROR:"
-        );
-
-        console.error(error);
-
-
-        throw new Error(
-            "Unable to send OTP email"
-        );
-
-    }
+    });
 
 }
 
@@ -267,28 +359,38 @@ async function sendSellerOrderEmail(
             .join("");
 
 
-    const mailOptions = {
+    const html = `
 
-        from:
-            `"LUXORA Store" <${process.env.EMAIL_USER}>`,
+        <!DOCTYPE html>
 
-        to:
-            process.env.SELLER_EMAIL,
+        <html>
 
-        subject:
-            `NEW LUXORA ORDER - ${order.orderNumber}`,
+        <body style="
+            font-family:Arial,Helvetica,sans-serif;
+            background:#f5f5f5;
+            padding:30px;
+        ">
 
-        html: `
 
             <div style="
-                font-family:Arial,sans-serif;
                 max-width:800px;
                 margin:auto;
+                background:white;
+                padding:30px;
             ">
 
-                <h1>LUXORA</h1>
 
-                <h2>New Order Received</h2>
+                <h1 style="
+                    color:#d4af37;
+                    letter-spacing:5px;
+                ">
+                    LUXORA
+                </h1>
+
+
+                <h2>
+                    New Order Received
+                </h2>
 
 
                 <p>
@@ -300,7 +402,9 @@ async function sendSellerOrderEmail(
                 <hr>
 
 
-                <h3>Customer Details</h3>
+                <h3>
+                    Customer Details
+                </h3>
 
 
                 <p>
@@ -322,28 +426,43 @@ async function sendSellerOrderEmail(
 
 
                 <p>
-                    <strong>Address:</strong><br>
 
-                    ${order.customer.address}<br>
+                    <strong>
+                        Address:
+                    </strong>
 
-                    ${order.customer.city}<br>
+                    <br>
 
-                    ${order.customer.state}<br>
+                    ${order.customer.address}
+
+                    <br>
+
+                    ${order.customer.city}
+
+                    <br>
+
+                    ${order.customer.state}
+
+                    <br>
 
                     ${order.customer.pinCode}
+
                 </p>
 
 
                 <hr>
 
 
-                <h3>Order Items</h3>
+                <h3>
+                    Order Items
+                </h3>
 
 
                 <table style="
                     width:100%;
                     border-collapse:collapse;
                 ">
+
 
                     <thead>
 
@@ -391,6 +510,7 @@ async function sendSellerOrderEmail(
 
                     </tbody>
 
+
                 </table>
 
 
@@ -403,26 +523,42 @@ async function sendSellerOrderEmail(
 
 
                 <p>
-                    Payment Method:
+                    <strong>
+                        Payment Method:
+                    </strong>
+
                     ${order.paymentMethod}
                 </p>
 
 
                 <p>
-                    Order Status:
+                    <strong>
+                        Order Status:
+                    </strong>
+
                     ${order.orderStatus}
                 </p>
 
+
             </div>
 
-        `
+        </body>
 
-    };
+        </html>
+
+    `;
 
 
-    return transporter.sendMail(
-        mailOptions
-    );
+    return sendEmail({
+
+        to: process.env.SELLER_EMAIL,
+
+        subject:
+            `NEW LUXORA ORDER - ${order.orderNumber}`,
+
+        html
+
+    });
 
 }
 
@@ -435,7 +571,13 @@ async function sendCustomerOrderConfirmation(
     order
 ) {
 
-    if (!order.customer.email) {
+    if (
+        !order.customer.email
+    ) {
+
+        console.log(
+            "Customer email not provided. Skipping confirmation email."
+        );
 
         return null;
 
@@ -446,7 +588,9 @@ async function sendCustomerOrderConfirmation(
         order.items
             .map(item => `
 
-                <li>
+                <li style="
+                    margin-bottom:8px;
+                ">
 
                     ${item.name}
 
@@ -460,27 +604,34 @@ async function sendCustomerOrderConfirmation(
             .join("");
 
 
-    const mailOptions = {
+    const html = `
 
-        from:
-            `"LUXORA" <${process.env.EMAIL_USER}>`,
+        <!DOCTYPE html>
 
-        to:
-            order.customer.email,
+        <html>
 
-        subject:
-            `LUXORA Order Confirmation - ${order.orderNumber}`,
+        <body style="
+            margin:0;
+            padding:30px;
+            background:#f5f5f5;
+            font-family:Arial,Helvetica,sans-serif;
+        ">
 
-        html: `
 
             <div style="
-                font-family:Arial,sans-serif;
                 max-width:600px;
                 margin:auto;
+                background:#ffffff;
                 padding:30px;
             ">
 
-                <h1>LUXORA</h1>
+
+                <h1 style="
+                    color:#d4af37;
+                    letter-spacing:5px;
+                ">
+                    LUXORA
+                </h1>
 
 
                 <h2>
@@ -531,16 +682,27 @@ async function sendCustomerOrderConfirmation(
                     LUXORA.
                 </p>
 
+
             </div>
 
-        `
+        </body>
 
-    };
+        </html>
+
+    `;
 
 
-    return transporter.sendMail(
-        mailOptions
-    );
+    return sendEmail({
+
+        to:
+            order.customer.email,
+
+        subject:
+            `LUXORA Order Confirmation - ${order.orderNumber}`,
+
+        html
+
+    });
 
 }
 
