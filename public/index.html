@@ -1,0 +1,2047 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>LUXORA | Luxury Perfumes</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #faf8f3;
+            color: #111;
+        }
+
+        header {
+            height: 78px;
+            background: #080808;
+            color: white;
+            padding: 0 7%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-family: Georgia, serif;
+            font-size: 30px;
+            letter-spacing: 7px;
+            color: #d4af37;
+            text-decoration: none;
+        }
+
+        nav {
+            display: flex;
+            gap: 28px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        nav a:hover {
+            color: #d4af37;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .login-btn {
+            background: transparent;
+            border: 1px solid #d4af37;
+            color: #d4af37;
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .user-menu {
+            display: none;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-name {
+            color: #d4af37;
+            font-size: 12px;
+        }
+
+        .logout-btn {
+            background: none;
+            border: 1px solid #555;
+            color: #aaa;
+            padding: 8px 10px;
+            cursor: pointer;
+        }
+
+        .cart-btn {
+            background: #d4af37;
+            border: 0;
+            padding: 11px 16px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .hero {
+            min-height: 680px;
+
+            background:
+                linear-gradient(
+                    rgba(0, 0, 0, .67),
+                    rgba(0, 0, 0, .67)
+                ),
+                url("https://images.unsplash.com/photo-1547887538-e3a2f32cb1cc?auto=format&fit=crop&w=2000&q=90");
+
+            background-size: cover;
+            background-position: center;
+
+            display: flex;
+            align-items: center;
+            padding: 7%;
+            color: white;
+        }
+
+        .hero-content {
+            max-width: 700px;
+        }
+
+        .hero-small {
+            color: #d4af37;
+            letter-spacing: 5px;
+            font-size: 12px;
+        }
+
+        .hero h1 {
+            font-family: Georgia, serif;
+            font-weight: normal;
+            font-size: clamp(55px, 8vw, 95px);
+            line-height: .95;
+            margin: 25px 0;
+        }
+
+        .hero p {
+            color: #ddd;
+            font-size: 18px;
+            line-height: 1.7;
+            max-width: 550px;
+        }
+
+        .hero-btn {
+            margin-top: 30px;
+            padding: 15px 28px;
+            background: #d4af37;
+            border: 0;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        section {
+            padding: 90px 7%;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title small {
+            color: #b28b2d;
+            letter-spacing: 4px;
+            font-size: 11px;
+        }
+
+        .section-title h2 {
+            font-family: Georgia, serif;
+            font-weight: normal;
+            font-size: 48px;
+            margin-top: 12px;
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+        }
+
+        .product {
+            background: white;
+            border: 1px solid #e3ddd2;
+        }
+
+        .product-image {
+            height: 390px;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: .4s;
+        }
+
+        .product:hover img {
+            transform: scale(1.05);
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-info h3 {
+            font-family: Georgia, serif;
+            font-size: 22px;
+            font-weight: normal;
+        }
+
+        .notes {
+            color: #777;
+            font-size: 13px;
+            margin: 7px 0;
+        }
+
+        .price {
+            font-weight: bold;
+            font-size: 17px;
+            margin-top: 8px;
+        }
+
+        .add-btn {
+            width: 100%;
+            margin-top: 15px;
+            padding: 12px;
+            background: white;
+            border: 1px solid #111;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .add-btn:hover {
+            background: #111;
+            color: white;
+        }
+
+        .story {
+            background: #0b0b0b;
+            color: white;
+
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .story-image {
+            width: 100%;
+            height: 560px;
+            object-fit: cover;
+        }
+
+        .story-small {
+            color: #d4af37;
+            letter-spacing: 4px;
+        }
+
+        .story h2 {
+            font-family: Georgia, serif;
+            font-weight: normal;
+            font-size: 55px;
+            margin: 15px 0;
+        }
+
+        .story p {
+            color: #aaa;
+            line-height: 1.8;
+            margin: 15px 0;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .feature {
+            background: white;
+            text-align: center;
+            padding: 45px 25px;
+        }
+
+        .feature-icon {
+            color: #d4af37;
+            font-size: 30px;
+        }
+
+        .feature h3 {
+            font-family: Georgia, serif;
+            font-size: 22px;
+            font-weight: normal;
+            margin: 15px 0;
+        }
+
+        .feature p {
+            color: #777;
+            line-height: 1.6;
+        }
+
+        footer {
+            background: #070707;
+            color: #999;
+            text-align: center;
+            padding: 60px 7%;
+        }
+
+        footer h2 {
+            color: #d4af37;
+            font-family: Georgia, serif;
+            letter-spacing: 7px;
+        }
+
+        footer p {
+            margin-top: 15px;
+        }
+
+        .footer-email {
+            color: #d4af37;
+        }
+
+        .cart {
+            position: fixed;
+            top: 0;
+            right: -450px;
+            width: 430px;
+            max-width: 100%;
+            height: 100vh;
+            background: white;
+            z-index: 2000;
+            padding: 30px;
+            box-shadow: -10px 0 30px rgba(0, 0, 0, .25);
+            transition: .35s;
+            overflow-y: auto;
+        }
+
+        .cart.open {
+            right: 0;
+        }
+
+        .cart-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .5);
+            z-index: 1500;
+            display: none;
+        }
+
+        .cart-overlay.show {
+            display: block;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 20px;
+        }
+
+        .cart-header h2 {
+            font-family: Georgia, serif;
+            font-weight: normal;
+        }
+
+        .close-btn {
+            background: none;
+            border: 0;
+            font-size: 28px;
+            cursor: pointer;
+        }
+
+        .cart-items {
+            padding: 20px 0;
+        }
+
+        .empty-cart {
+            text-align: center;
+            color: #777;
+            padding: 30px;
+        }
+
+        .cart-item {
+            display: grid;
+            grid-template-columns: 70px 1fr auto;
+            gap: 15px;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .cart-item img {
+            width: 70px;
+            height: 80px;
+            object-fit: cover;
+        }
+
+        .cart-item h4 {
+            font-family: Georgia, serif;
+            font-weight: normal;
+        }
+
+        .cart-item p {
+            color: #777;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        .remove-btn {
+            background: none;
+            border: 0;
+            color: #a00;
+            cursor: pointer;
+        }
+
+        .cart-total {
+            border-top: 1px solid #ddd;
+            padding-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            font-size: 19px;
+        }
+
+        .order-button {
+            width: 100%;
+            margin-top: 20px;
+            padding: 16px;
+            background: #d4af37;
+            border: 0;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .order-info {
+            text-align: center;
+            color: #777;
+            font-size: 12px;
+            line-height: 1.6;
+            margin-top: 12px;
+        }
+
+        .loading {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 50px;
+            color: #777;
+        }
+
+        .error-message {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 40px;
+            color: #a00;
+        }
+
+        @media(max-width:1000px) {
+
+            nav {
+                display: none;
+            }
+
+            .products {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .story {
+                grid-template-columns: 1fr;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        @media(max-width:600px) {
+
+            header {
+                padding: 0 5%;
+            }
+
+            .logo {
+                font-size: 22px;
+                letter-spacing: 4px;
+            }
+
+            .user-name {
+                display: none;
+            }
+
+            .hero {
+                min-height: 580px;
+                padding: 8% 5%;
+            }
+
+            .hero h1 {
+                font-size: 55px;
+            }
+
+            section {
+                padding: 65px 5%;
+            }
+
+            .section-title h2 {
+                font-size: 38px;
+            }
+
+            .products {
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+            }
+
+            .product-image {
+                height: 260px;
+            }
+
+            .product-info {
+                padding: 13px;
+            }
+
+            .product-info h3 {
+                font-size: 18px;
+            }
+
+            .story-image {
+                height: 350px;
+            }
+
+            .story h2 {
+                font-size: 43px;
+            }
+
+            .cart {
+                width: 100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <a
+        href="#home"
+        class="logo"
+    >
+        LUXORA
+    </a>
+
+
+    <nav>
+
+        <a href="#home">
+            Home
+        </a>
+
+        <a href="#collection">
+            Collection
+        </a>
+
+        <a href="#story">
+            Our Story
+        </a>
+
+        <a href="#contact">
+            Contact
+        </a>
+
+    </nav>
+
+
+    <div class="header-actions">
+
+        <a
+            href="login.html"
+            class="login-btn"
+            id="loginButton"
+        >
+            LOGIN
+        </a>
+
+
+        <div
+            class="user-menu"
+            id="userMenu"
+        >
+
+            <span
+                class="user-name"
+                id="userName"
+            ></span>
+
+            <button
+                class="logout-btn"
+                onclick="logout()"
+            >
+                LOGOUT
+            </button>
+
+        </div>
+
+
+        <button
+            class="cart-btn"
+            onclick="openCart()"
+        >
+            🛍 CART
+            (<span id="cartCount">0</span>)
+        </button>
+
+    </div>
+
+</header>
+
+
+<section
+    class="hero"
+    id="home"
+>
+
+    <div class="hero-content">
+
+        <div class="hero-small">
+            LUXORA · FINE FRAGRANCE
+        </div>
+
+        <h1>
+            Wear the extraordinary.
+        </h1>
+
+        <p>
+            Premium fragrances created for people
+            who want to be remembered.
+            Discover your signature scent with LUXORA.
+        </p>
+
+        <button
+            class="hero-btn"
+            onclick="scrollToCollection()"
+        >
+            SHOP COLLECTION
+        </button>
+
+    </div>
+
+</section>
+
+
+<section id="collection">
+
+    <div class="section-title">
+
+        <small>
+            THE LUXORA COLLECTION
+        </small>
+
+        <h2>
+            Scents With Presence
+        </h2>
+
+    </div>
+
+
+    <div
+        class="products"
+        id="products"
+    >
+
+        <div class="loading">
+            Loading collection...
+        </div>
+
+    </div>
+
+</section>
+
+
+<section
+    class="story"
+    id="story"
+>
+
+    <img
+        class="story-image"
+        src="https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=1200&q=90"
+        alt="LUXORA perfume"
+    >
+
+
+    <div>
+
+        <div class="story-small">
+            THE LUXORA STORY
+        </div>
+
+        <h2>
+            Luxury is a feeling.
+        </h2>
+
+        <p>
+            LUXORA is built around the idea that
+            fragrance should become part of your identity.
+        </p>
+
+        <p>
+            Our fragrances combine elegance,
+            character and unforgettable presence.
+        </p>
+
+    </div>
+
+</section>
+
+
+<section>
+
+    <div class="section-title">
+
+        <small>
+            WHY LUXORA
+        </small>
+
+        <h2>
+            Made To Be Noticed
+        </h2>
+
+    </div>
+
+
+    <div class="features">
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                ✦
+            </div>
+
+            <h3>
+                Long Lasting
+            </h3>
+
+            <p>
+                Fragrances designed to stay with
+                you throughout the day.
+            </p>
+
+        </div>
+
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                ◇
+            </div>
+
+            <h3>
+                Premium Quality
+            </h3>
+
+            <p>
+                Elegant fragrance profiles created
+                for a luxurious experience.
+            </p>
+
+        </div>
+
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                ♢
+            </div>
+
+            <h3>
+                Unique Identity
+            </h3>
+
+            <p>
+                Scents designed to make your
+                presence unforgettable.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<footer id="contact">
+
+    <h2>
+        LUXORA
+    </h2>
+
+    <p>
+        Luxury fragrance. Unforgettable presence.
+    </p>
+
+    <p>
+        Email:
+        <span class="footer-email">
+            sampathshetty0303@gmail.com
+        </span>
+    </p>
+
+</footer>
+
+
+<div
+    class="cart-overlay"
+    id="cartOverlay"
+    onclick="closeCart()"
+></div>
+
+
+<div
+    class="cart"
+    id="cart"
+>
+
+    <div class="cart-header">
+
+        <h2>
+            Your Bag
+        </h2>
+
+        <button
+            class="close-btn"
+            onclick="closeCart()"
+        >
+            ×
+        </button>
+
+    </div>
+
+
+    <div
+        class="cart-items"
+        id="cartItems"
+    ></div>
+
+
+    <div class="cart-total">
+
+        <span>
+            Total
+        </span>
+
+        <span id="cartTotal">
+            ₹0
+        </span>
+
+    </div>
+
+
+    <button
+        class="order-button"
+        onclick="goToCheckout()"
+    >
+        PROCEED TO ORDER
+    </button>
+
+
+    <div class="order-info">
+
+        No online payment gateway.
+
+        <br>
+
+        Your order will be emailed directly
+        to LUXORA.
+
+    </div>
+
+</div>
+
+
+<script>
+
+/*
+====================================================
+LUXORA FRONTEND
+MongoDB + Local Fallback Products
+====================================================
+*/
+
+
+/*
+STATIC PRODUCTS
+
+These are your current products.
+
+The website will automatically try to
+sync them into MongoDB.
+*/
+
+const staticProducts = [
+
+    {
+        name: "LUXORA Noir",
+
+        price: 2499,
+
+        description:
+            "A sophisticated fragrance with a powerful presence.",
+
+        notes:
+            "Bergamot · Leather · Amber",
+
+        image:
+            "https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=900&q=85",
+
+        category: "Men",
+
+        size: "50ml",
+
+        stock: 100
+    },
+
+
+    {
+        name: "LUXORA Élan",
+
+        price: 2299,
+
+        description:
+            "A luxurious floral fragrance with a soft elegant finish.",
+
+        notes:
+            "Rose · Jasmine · Vanilla",
+
+        image:
+            "https://images.unsplash.com/photo-1547887537-6158d64f1b6d?auto=format&fit=crop&w=900&q=85",
+
+        category: "Women",
+
+        size: "50ml",
+
+        stock: 100
+    },
+
+
+    {
+        name: "LUXORA Oud",
+
+        price: 2799,
+
+        description:
+            "A deep and mysterious oud fragrance.",
+
+        notes:
+            "Oud · Saffron · Sandalwood",
+
+        image:
+            "https://images.unsplash.com/photo-1588405748880-12d1d2a59f75?auto=format&fit=crop&w=900&q=85",
+
+        category: "Unisex",
+
+        size: "50ml",
+
+        stock: 100
+    },
+
+
+    {
+        name: "LUXORA Éclat",
+
+        price: 2199,
+
+        description:
+            "A bright modern fragrance with a clean finish.",
+
+        notes:
+            "Citrus · Neroli · Musk",
+
+        image:
+            "https://images.unsplash.com/photo-1615634260167-c8cdede054de?auto=format&fit=crop&w=900&q=85",
+
+        category: "Unisex",
+
+        size: "50ml",
+
+        stock: 100
+    }
+
+];
+
+
+/*
+MongoDB products currently displayed
+*/
+
+let products = [];
+
+
+/*
+Cart
+
+IMPORTANT:
+Cart items now use MongoDB product IDs.
+*/
+
+let cart =
+    JSON.parse(
+        localStorage.getItem("luxoraCart")
+    ) || [];
+
+
+/*
+====================================================
+MONEY
+====================================================
+*/
+
+function money(value) {
+
+    return "₹" +
+        Number(value)
+            .toLocaleString("en-IN");
+
+}
+
+
+/*
+====================================================
+LOAD PRODUCTS
+====================================================
+*/
+
+async function loadProducts() {
+
+    const container =
+        document.getElementById("products");
+
+
+    container.innerHTML = `
+        <div class="loading">
+            Loading LUXORA collection...
+        </div>
+    `;
+
+
+    try {
+
+        /*
+        First get products from MongoDB.
+        */
+
+        const response =
+            await fetch("/api/products");
+
+
+        if (!response.ok) {
+            throw new Error(
+                "MongoDB products could not be loaded"
+            );
+        }
+
+
+        let mongoProducts =
+            await response.json();
+
+
+        /*
+        If MongoDB is empty, create our
+        static products automatically.
+        */
+
+        if (
+            !Array.isArray(mongoProducts) ||
+            mongoProducts.length === 0
+        ) {
+
+            mongoProducts =
+                await syncStaticProducts();
+
+        } else {
+
+            /*
+            MongoDB has products.
+
+            Make sure all our existing static
+            products also exist in MongoDB.
+            */
+
+            mongoProducts =
+                await syncMissingProducts(
+                    mongoProducts
+                );
+
+        }
+
+
+        products =
+            mongoProducts;
+
+
+        displayProducts();
+
+
+        cleanCart();
+
+
+        displayCart();
+
+
+    } catch (error) {
+
+        console.error(
+            "Product loading error:",
+            error
+        );
+
+
+        /*
+        If backend isn't available,
+        show static products.
+
+        However, ordering them requires
+        the backend/MongoDB to be running.
+        */
+
+        products =
+            staticProducts.map(
+                (product, index) => {
+
+                    return {
+                        ...product,
+                        _id: "local-" + index
+                    };
+
+                }
+            );
+
+
+        displayProducts();
+
+
+        document.getElementById(
+            "products"
+        ).insertAdjacentHTML(
+            "afterbegin",
+            `
+            <div
+                style="
+                    grid-column:1/-1;
+                    text-align:center;
+                    color:#a00;
+                    font-size:13px;
+                    margin-bottom:20px;
+                "
+            >
+                Server connection unavailable.
+                Start <strong>node server.js</strong>
+                before placing an order.
+            </div>
+            `
+        );
+
+    }
+
+}
+
+
+/*
+====================================================
+SYNC ALL STATIC PRODUCTS
+====================================================
+*/
+
+async function syncStaticProducts() {
+
+    const result = [];
+
+
+    for (
+        const product of staticProducts
+    ) {
+
+        try {
+
+            /*
+            Check whether product already exists.
+            */
+
+            const existingResponse =
+                await fetch(
+                    "/api/products"
+                );
+
+
+            const existingProducts =
+                await existingResponse.json();
+
+
+            const existing =
+                existingProducts.find(
+                    item =>
+                        item.name === product.name
+                );
+
+
+            if (existing) {
+
+                result.push(existing);
+
+                continue;
+
+            }
+
+
+            /*
+            Product doesn't exist.
+
+            Create it in MongoDB.
+            */
+
+            const response =
+                await fetch(
+                    "/api/products",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body:
+                            JSON.stringify(product)
+                    }
+                );
+
+
+            if (response.ok) {
+
+                const data =
+                    await response.json();
+
+
+                result.push(
+                    data.product
+                );
+
+            }
+
+        } catch (error) {
+
+            console.error(
+                "Could not sync product:",
+                product.name,
+                error
+            );
+
+        }
+
+    }
+
+
+    return result;
+
+}
+
+
+/*
+====================================================
+SYNC MISSING STATIC PRODUCTS
+====================================================
+*/
+
+async function syncMissingProducts(
+    mongoProducts
+) {
+
+    const result =
+        [...mongoProducts];
+
+
+    for (
+        const product of staticProducts
+    ) {
+
+        const exists =
+            mongoProducts.some(
+                item =>
+                    item.name === product.name
+            );
+
+
+        if (exists) {
+            continue;
+        }
+
+
+        try {
+
+            const response =
+                await fetch(
+                    "/api/products",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body:
+                            JSON.stringify(product)
+                    }
+                );
+
+
+            if (response.ok) {
+
+                const data =
+                    await response.json();
+
+
+                result.push(
+                    data.product
+                );
+
+            }
+
+        } catch (error) {
+
+            console.error(
+                "Could not add product:",
+                product.name,
+                error
+            );
+
+        }
+
+    }
+
+
+    return result;
+
+}
+
+
+/*
+====================================================
+DISPLAY PRODUCTS
+====================================================
+*/
+
+function displayProducts() {
+
+    const container =
+        document.getElementById(
+            "products"
+        );
+
+
+    container.innerHTML = "";
+
+
+    if (
+        !products ||
+        products.length === 0
+    ) {
+
+        container.innerHTML = `
+            <div class="error-message">
+                No products available.
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    products.forEach(
+        product => {
+
+            container.innerHTML += `
+
+                <div class="product">
+
+                    <div class="product-image">
+
+                        <img
+                            src="${product.image}"
+                            alt="${escapeHTML(product.name)}"
+                        >
+
+                    </div>
+
+
+                    <div class="product-info">
+
+                        <h3>
+                            ${escapeHTML(product.name)}
+                        </h3>
+
+
+                        <div class="notes">
+
+                            ${
+                                escapeHTML(
+                                    product.notes ||
+                                    product.description ||
+                                    "Premium fragrance"
+                                )
+                            }
+
+                        </div>
+
+
+                        <div class="price">
+
+                            ${money(product.price)}
+
+                        </div>
+
+
+                        <button
+                            class="add-btn"
+                            onclick="addToCart('${product._id}')"
+                        >
+
+                            ADD TO BAG
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }
+    );
+
+}
+
+
+/*
+====================================================
+ESCAPE HTML
+====================================================
+*/
+
+function escapeHTML(value) {
+
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+
+/*
+====================================================
+ADD TO CART
+====================================================
+*/
+
+function addToCart(productId) {
+
+    const product =
+        products.find(
+            item =>
+                item._id === productId
+        );
+
+
+    if (!product) {
+
+        alert(
+            "Product could not be found."
+        );
+
+        return;
+
+    }
+
+
+    /*
+    Prevent adding out-of-stock product.
+    */
+
+    if (
+        product.stock !== undefined &&
+        product.stock <= 0
+    ) {
+
+        alert(
+            "This product is currently out of stock."
+        );
+
+        return;
+
+    }
+
+
+    const existing =
+        cart.find(
+            item =>
+                item.productId === productId
+        );
+
+
+    if (existing) {
+
+        existing.quantity++;
+
+    } else {
+
+        cart.push({
+
+            productId: productId,
+
+            quantity: 1
+
+        });
+
+    }
+
+
+    saveCart();
+
+    openCart();
+
+}
+
+
+/*
+====================================================
+SAVE CART
+====================================================
+*/
+
+function saveCart() {
+
+    localStorage.setItem(
+        "luxoraCart",
+        JSON.stringify(cart)
+    );
+
+
+    displayCart();
+
+}
+
+
+/*
+====================================================
+CLEAN CART
+====================================================
+*/
+
+function cleanCart() {
+
+    cart =
+        cart.filter(
+            item => {
+
+                return products.some(
+                    product =>
+                        product._id ===
+                        item.productId
+                );
+
+            }
+        );
+
+
+    saveCart();
+
+}
+
+
+/*
+====================================================
+DISPLAY CART
+====================================================
+*/
+
+function displayCart() {
+
+    const container =
+        document.getElementById(
+            "cartItems"
+        );
+
+
+    const count =
+        document.getElementById(
+            "cartCount"
+        );
+
+
+    const totalElement =
+        document.getElementById(
+            "cartTotal"
+        );
+
+
+    const totalQuantity =
+        cart.reduce(
+            (
+                sum,
+                item
+            ) =>
+                sum +
+                Number(item.quantity || 0),
+            0
+        );
+
+
+    count.innerText =
+        totalQuantity;
+
+
+    if (
+        cart.length === 0
+    ) {
+
+        container.innerHTML = `
+            <div class="empty-cart">
+                Your bag is empty.
+            </div>
+        `;
+
+
+        totalElement.innerText =
+            "₹0";
+
+
+        return;
+
+    }
+
+
+    container.innerHTML = "";
+
+
+    let total = 0;
+
+
+    cart.forEach(
+        item => {
+
+            const product =
+                products.find(
+                    product =>
+                        product._id ===
+                        item.productId
+                );
+
+
+            if (!product) {
+                return;
+            }
+
+
+            const quantity =
+                Number(
+                    item.quantity || 1
+                );
+
+
+            total +=
+                Number(product.price) *
+                quantity;
+
+
+            container.innerHTML += `
+
+                <div class="cart-item">
+
+                    <img
+                        src="${product.image}"
+                        alt="${escapeHTML(product.name)}"
+                    >
+
+
+                    <div>
+
+                        <h4>
+                            ${escapeHTML(product.name)}
+                        </h4>
+
+
+                        <p>
+
+                            ${quantity}
+                            ×
+                            ${money(product.price)}
+
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        class="remove-btn"
+                        onclick="removeItem('${product._id}')"
+                    >
+
+                        Remove
+
+                    </button>
+
+                </div>
+
+            `;
+
+        }
+    );
+
+
+    totalElement.innerText =
+        money(total);
+
+}
+
+
+/*
+====================================================
+REMOVE ITEM
+====================================================
+*/
+
+function removeItem(productId) {
+
+    cart =
+        cart.filter(
+            item =>
+                item.productId !== productId
+        );
+
+
+    saveCart();
+
+}
+
+
+/*
+====================================================
+OPEN CART
+====================================================
+*/
+
+function openCart() {
+
+    document
+        .getElementById("cart")
+        .classList.add("open");
+
+
+    document
+        .getElementById("cartOverlay")
+        .classList.add("show");
+
+}
+
+
+/*
+====================================================
+CLOSE CART
+====================================================
+*/
+
+function closeCart() {
+
+    document
+        .getElementById("cart")
+        .classList.remove("open");
+
+
+    document
+        .getElementById("cartOverlay")
+        .classList.remove("show");
+
+}
+
+
+/*
+====================================================
+CHECKOUT
+====================================================
+*/
+
+function goToCheckout() {
+
+    if (
+        cart.length === 0
+    ) {
+
+        alert(
+            "Your bag is empty."
+        );
+
+        return;
+
+    }
+
+
+    /*
+    Make sure every cart item has
+    a MongoDB ID.
+    */
+
+    const invalid =
+        cart.some(
+            item =>
+                !item.productId ||
+                String(
+                    item.productId
+                ).startsWith("local-")
+        );
+
+
+    if (invalid) {
+
+        alert(
+            "Please wait for the products to sync with the server."
+        );
+
+        return;
+
+    }
+
+
+    window.location.href =
+        "checkout.html";
+
+}
+
+
+/*
+====================================================
+SCROLL
+====================================================
+*/
+
+function scrollToCollection() {
+
+    document
+        .getElementById("collection")
+        .scrollIntoView({
+            behavior: "smooth"
+        });
+
+}
+
+
+/*
+====================================================
+CHECK LOGIN
+====================================================
+*/
+
+async function checkLogin() {
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/auth/me",
+                {
+                    credentials: "include"
+                }
+            );
+
+
+        /*
+        If not logged in, backend returns 401.
+        That's completely normal.
+        */
+
+        if (
+            !response.ok
+        ) {
+
+            showLoggedOut();
+
+            return;
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            data.success &&
+            data.user
+        ) {
+
+            document
+                .getElementById(
+                    "loginButton"
+                )
+                .style.display =
+                "none";
+
+
+            document
+                .getElementById(
+                    "userMenu"
+                )
+                .style.display =
+                "flex";
+
+
+            document
+                .getElementById(
+                    "userName"
+                )
+                .innerText =
+                "Hi, " +
+                data.user.name;
+
+        } else {
+
+            showLoggedOut();
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Login check error:",
+            error
+        );
+
+        showLoggedOut();
+
+    }
+
+}
+
+
+/*
+====================================================
+SHOW LOGGED OUT
+====================================================
+*/
+
+function showLoggedOut() {
+
+    document
+        .getElementById(
+            "loginButton"
+        )
+        .style.display =
+        "inline-block";
+
+
+    document
+        .getElementById(
+            "userMenu"
+        )
+        .style.display =
+        "none";
+
+}
+
+
+/*
+====================================================
+LOGOUT
+====================================================
+*/
+
+async function logout() {
+
+    try {
+
+        await fetch(
+            "/api/auth/logout",
+            {
+                method: "POST",
+
+                credentials: "include"
+            }
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Logout error:",
+            error
+        );
+
+    }
+
+
+    localStorage.removeItem(
+        "luxoraUser"
+    );
+
+
+    location.reload();
+
+}
+
+
+/*
+====================================================
+START WEBSITE
+====================================================
+*/
+
+displayCart();
+
+checkLogin();
+
+loadProducts();
+
+</script>
+
+
+</body>
+
+</html>

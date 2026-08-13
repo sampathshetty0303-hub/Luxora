@@ -1,0 +1,487 @@
+
+/* =========================================
+   LUXORA CHECKOUT
+========================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #faf8f3;
+    color: #111;
+}
+
+/* =========================================
+   HEADER
+========================================= */
+
+header {
+    height: 78px;
+    background: #080808;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+.logo {
+    color: #d4af37;
+    text-decoration: none;
+
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 30px;
+    letter-spacing: 7px;
+}
+
+/* =========================================
+   CHECKOUT CONTAINER
+========================================= */
+
+.checkout-container {
+    width: 100%;
+    max-width: 850px;
+
+    margin: 60px auto;
+    padding: 45px;
+
+    background: #ffffff;
+
+    border: 1px solid #e1ddd4;
+
+    box-shadow:
+        0 15px 50px rgba(0, 0, 0, 0.08);
+}
+
+.checkout-container h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 42px;
+    font-weight: normal;
+
+    text-align: center;
+
+    margin-bottom: 10px;
+}
+
+.checkout-container > p {
+    text-align: center;
+
+    color: #777;
+
+    font-size: 14px;
+
+    margin-bottom: 40px;
+}
+
+/* =========================================
+   FORM
+========================================= */
+
+#checkoutForm {
+    width: 100%;
+}
+
+.form-group {
+    margin-bottom: 22px;
+}
+
+.form-group label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #222;
+
+    font-size: 11px;
+    font-weight: bold;
+
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+.form-group small {
+    color: #999;
+
+    font-size: 10px;
+
+    font-weight: normal;
+
+    text-transform: none;
+
+    letter-spacing: 0;
+}
+
+/* =========================================
+   INPUTS
+========================================= */
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+
+    padding: 14px 15px;
+
+    background: #fafafa;
+
+    border: 1px solid #d7d2c9;
+
+    color: #111;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+.form-group textarea {
+    min-height: 120px;
+
+    resize: vertical;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    background: #fff;
+
+    border-color: #d4af37;
+
+    box-shadow:
+        0 0 0 2px rgba(212, 175, 55, 0.12);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #aaa;
+}
+
+/* =========================================
+   ORDER SUMMARY
+========================================= */
+
+#orderSummary {
+    margin-top: 35px;
+
+    margin-bottom: 25px;
+
+    padding: 25px;
+
+    background: #faf8f3;
+
+    border: 1px solid #e1ddd4;
+}
+
+#orderSummary h2 {
+    font-family: Georgia, "Times New Roman", serif;
+
+    font-size: 25px;
+
+    font-weight: normal;
+
+    margin-bottom: 20px;
+}
+
+#orderSummary p {
+    color: #555;
+
+    font-size: 14px;
+
+    line-height: 1.7;
+}
+
+#orderSummary strong {
+    color: #111;
+}
+
+/* =========================================
+   ORDER ITEMS
+========================================= */
+
+.order-item {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 14px 0;
+
+    border-bottom: 1px solid #ddd;
+}
+
+.order-item:last-child {
+    border-bottom: none;
+}
+
+.order-item-name {
+    font-family: Georgia, "Times New Roman", serif;
+
+    font-size: 17px;
+}
+
+.order-item-details {
+    color: #777;
+
+    font-size: 12px;
+
+    margin-top: 4px;
+}
+
+.order-item-price {
+    font-weight: bold;
+
+    white-space: nowrap;
+}
+
+/* =========================================
+   TOTAL
+========================================= */
+
+.order-total {
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-top: 20px;
+
+    padding-top: 20px;
+
+    border-top: 1px solid #111;
+
+    font-size: 20px;
+
+    font-weight: bold;
+}
+
+.order-total span:last-child {
+    color: #b28b2d;
+}
+
+/* =========================================
+   CHECKOUT BUTTON
+========================================= */
+
+.checkout-button {
+    width: 100%;
+
+    padding: 17px;
+
+    margin-top: 10px;
+
+    background: #d4af37;
+
+    border: 1px solid #d4af37;
+
+    color: #111;
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+    letter-spacing: 1.5px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.checkout-button:hover {
+    background: #b9962e;
+
+    border-color: #b9962e;
+
+    transform: translateY(-1px);
+}
+
+.checkout-button:active {
+    transform: translateY(0);
+}
+
+.checkout-button:disabled {
+    opacity: 0.6;
+
+    cursor: not-allowed;
+
+    transform: none;
+}
+
+/* =========================================
+   CHECKOUT MESSAGE
+========================================= */
+
+#checkoutMessage {
+    display: none;
+
+    margin-top: 20px;
+
+    padding: 13px;
+
+    text-align: center;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+}
+
+#checkoutMessage.success {
+    display: block;
+
+    background: #edf8ef;
+
+    border: 1px solid #9aca9f;
+
+    color: #276b30;
+}
+
+#checkoutMessage.error {
+    display: block;
+
+    background: #fff0f0;
+
+    border: 1px solid #d99a9a;
+
+    color: #9a2929;
+}
+
+/* =========================================
+   SUCCESS STATE
+========================================= */
+
+.order-success {
+    text-align: center;
+
+    padding: 30px 10px;
+}
+
+.order-success-icon {
+    width: 65px;
+    height: 65px;
+
+    margin: 0 auto 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 2px solid #d4af37;
+
+    border-radius: 50%;
+
+    color: #d4af37;
+
+    font-size: 28px;
+}
+
+.order-success h2 {
+    font-family: Georgia, "Times New Roman", serif;
+
+    font-size: 32px;
+
+    font-weight: normal;
+
+    margin-bottom: 12px;
+}
+
+.order-success p {
+    color: #777;
+
+    font-size: 14px;
+
+    line-height: 1.7;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 700px) {
+
+    header {
+        height: 70px;
+    }
+
+    .logo {
+        font-size: 24px;
+
+        letter-spacing: 5px;
+    }
+
+    .checkout-container {
+        width: 92%;
+
+        margin: 35px auto;
+
+        padding: 28px 20px;
+    }
+
+    .checkout-container h1 {
+        font-size: 34px;
+    }
+
+    .checkout-container > p {
+        margin-bottom: 30px;
+    }
+
+    #orderSummary {
+        padding: 18px;
+    }
+
+    .order-item {
+        align-items: flex-start;
+    }
+
+    .order-item-name {
+        font-size: 15px;
+    }
+
+    .order-total {
+        font-size: 18px;
+    }
+}
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media (max-width: 420px) {
+
+    .checkout-container {
+        width: 94%;
+
+        padding: 25px 16px;
+    }
+
+    .checkout-container h1 {
+        font-size: 29px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        padding: 13px;
+    }
+
+    .checkout-button {
+        padding: 15px;
+
+        font-size: 12px;
+    }
+}
+
