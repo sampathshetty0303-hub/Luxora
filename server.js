@@ -9,6 +9,7 @@ const connectDB = require("./config/db");
 const authRoutes = require("./routes/auth");
 const productRoutes = require("./routes/products");
 const orderRoutes = require("./routes/orders");
+const adminRoutes = require("./routes/admin");
 
 
 const app = express();
@@ -53,6 +54,10 @@ app.use(
 app.use(
     "/api/orders",
     orderRoutes
+);
+app.use(
+    "/api/admin",
+    adminRoutes
 );
 
 

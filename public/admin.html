@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>LUXORA | Admin</title>
+
+    <link
+        rel="stylesheet"
+        href="/css/admin.css"
+    >
+
+</head>
+
+<body>
+
+<header class="admin-header">
+
+    <div class="admin-logo">
+        LUXORA
+        <span>ADMIN</span>
+    </div>
+
+    <button
+        id="logoutButton"
+        class="logout-button"
+    >
+        LOGOUT
+    </button>
+
+</header>
+
+
+<div class="admin-layout">
+
+    <aside class="sidebar">
+
+        <button
+            class="nav-button active"
+            data-section="dashboard"
+        >
+            Dashboard
+        </button>
+
+        <button
+            class="nav-button"
+            data-section="products"
+        >
+            Products
+        </button>
+
+        <button
+            class="nav-button"
+            data-section="orders"
+        >
+            Orders
+        </button>
+
+        <button
+            class="nav-button"
+            data-section="customers"
+        >
+            Customers
+        </button>
+
+        <a
+            href="/"
+            class="store-link"
+        >
+            ← Back to Store
+        </a>
+
+    </aside>
+
+
+    <main class="admin-main">
+
+        <div
+            id="message"
+            class="message"
+        ></div>
+
+
+        <!-- DASHBOARD -->
+
+        <section
+            id="dashboard"
+            class="admin-section active"
+        >
+
+            <h1>Dashboard</h1>
+
+            <p class="section-description">
+                Welcome to the LUXORA administration panel.
+            </p>
+
+
+            <div class="stats-grid">
+
+                <div class="stat-card">
+
+                    <span>
+                        PRODUCTS
+                    </span>
+
+                    <strong id="totalProducts">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <span>
+                        CUSTOMERS
+                    </span>
+
+                    <strong id="totalCustomers">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <span>
+                        ORDERS
+                    </span>
+
+                    <strong id="totalOrders">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <span>
+                        REVENUE
+                    </span>
+
+                    <strong id="totalRevenue">
+                        ₹0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="panel">
+
+                <h2>
+                    Recent Orders
+                </h2>
+
+                <div
+                    id="recentOrders"
+                    class="table-container"
+                ></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- PRODUCTS -->
+
+        <section
+            id="products"
+            class="admin-section"
+        >
+
+            <div class="section-header">
+
+                <div>
+
+                    <h1>Products</h1>
+
+                    <p class="section-description">
+                        Manage your LUXORA products.
+                    </p>
+
+                </div>
+
+                <button
+                    id="addProductButton"
+                    class="primary-button"
+                >
+                    + ADD PRODUCT
+                </button>
+
+            </div>
+
+
+            <div
+                id="productFormContainer"
+                class="panel product-form-panel"
+            >
+
+                <h2 id="productFormTitle">
+                    Add Product
+                </h2>
+
+
+                <form id="productForm">
+
+                    <input
+                        type="hidden"
+                        id="productId"
+                    >
+
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+
+                            <label>
+                                Product Name
+                            </label>
+
+                            <input
+                                id="productName"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Price
+                            </label>
+
+                            <input
+                                id="productPrice"
+                                type="number"
+                                min="0"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Category
+                            </label>
+
+                            <input
+                                id="productCategory"
+                                value="Perfume"
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Size
+                            </label>
+
+                            <input
+                                id="productSize"
+                                value="50ml"
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Stock
+                            </label>
+
+                            <input
+                                id="productStock"
+                                type="number"
+                                min="0"
+                                value="0"
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Image URL
+                            </label>
+
+                            <input
+                                id="productImage"
+                                placeholder="/images/product.jpg"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Description
+                        </label>
+
+                        <textarea
+                            id="productDescription"
+                        ></textarea>
+
+                    </div>
+
+
+                    <label class="checkbox">
+
+                        <input
+                            type="checkbox"
+                            id="productActive"
+                            checked
+                        >
+
+                        Product is active
+
+                    </label>
+
+
+                    <div class="form-actions">
+
+                        <button
+                            type="submit"
+                            class="primary-button"
+                        >
+                            SAVE PRODUCT
+                        </button>
+
+                        <button
+                            type="button"
+                            id="cancelProductButton"
+                            class="secondary-button"
+                        >
+                            CANCEL
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+
+            <div class="panel">
+
+                <div
+                    id="productsTable"
+                    class="table-container"
+                ></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ORDERS -->
+
+        <section
+            id="orders"
+            class="admin-section"
+        >
+
+            <h1>Orders</h1>
+
+            <p class="section-description">
+                Manage customer orders.
+            </p>
+
+
+            <div class="panel">
+
+                <div
+                    id="ordersTable"
+                    class="table-container"
+                ></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- CUSTOMERS -->
+
+        <section
+            id="customers"
+            class="admin-section"
+        >
+
+            <h1>Customers</h1>
+
+            <p class="section-description">
+                Registered LUXORA customers.
+            </p>
+
+
+            <div class="panel">
+
+                <div
+                    id="customersTable"
+                    class="table-container"
+                ></div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script src="/js/admin.js"></script>
+
+</body>
+
+</html>
